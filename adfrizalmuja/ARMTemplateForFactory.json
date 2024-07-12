@@ -59,7 +59,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Data flow123",
+						"name": "Extract and Transformation",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -87,6 +87,76 @@
 							},
 							"traceLevel": "Fine"
 						}
+					},
+					{
+						"name": "Load",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Extract and Transformation",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSV_ADLS_rizalmuja",
+								"type": "DatasetReference",
+								"parameters": {
+									"container_name": "latihanazure",
+									"folder_name": "latihan_azure_dataflow",
+									"file_name": "Ratings.csv",
+									"delimiter_name": ",",
+									"row_as_header": true
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQL_rizalmuja",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema": "dbo",
+									"table_name": "Ratings"
+								}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -98,7 +168,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/example_practice_case_1')]"
+				"[concat(variables('factoryId'), '/dataflows/example_practice_case_1')]",
+				"[concat(variables('factoryId'), '/datasets/CSV_ADLS_rizalmuja')]",
+				"[concat(variables('factoryId'), '/datasets/SQL_rizalmuja')]"
 			]
 		},
 		{
@@ -649,8 +721,8 @@
 						"          year),",
 						"     AverageRating = mean(Rating),",
 						"          HighestRating = first(title),",
-						"          LastRating = last(title),",
-						"          Count = count()) ~> aggregate1",
+						"          LowestRating = last(title),",
+						"          NumberMovies = count()) ~> aggregate1",
 						"aggregate1 alterRow(upsertIf(true())) ~> alterRow1",
 						"alterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
