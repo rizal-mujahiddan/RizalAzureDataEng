@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adfrizalmuja"
+		},
+		"ADLS_rizalmuja_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_rizalmuja'"
+		},
+		"SQL_rapidtech_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL_rapidtech'"
+		},
+		"sql_rizalmuja_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sql_rizalmuja'"
+		},
+		"ADLS_rizalmuja_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccrizal.dfs.core.windows.net/"
+		},
+		"SQL_rapidtech_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "rapidtech"
+		},
+		"SQL_rapidtech_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorks2022"
+		},
+		"SQL_rapidtech_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"sql_rizalmuja_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "rizalmuja.database.windows.net"
+		},
+		"sql_rizalmuja_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"sql_rizalmuja_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_rizal"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adfrizalmuja_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS_rizalmuja_accountKey": {
+						"value": "[parameters('ADLS_rizalmuja_accountKey')]"
+					},
+					"sql_rizalmuja_password": {
+						"value": "[parameters('sql_rizalmuja_password')]"
+					},
+					"SQL_rapidtech_password": {
+						"value": "[parameters('SQL_rapidtech_password')]"
+					},
+					"ADLS_rizalmuja_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_rizalmuja_properties_typeProperties_url')]"
+					},
+					"sql_rizalmuja_properties_typeProperties_server": {
+						"value": "[parameters('sql_rizalmuja_properties_typeProperties_server')]"
+					},
+					"sql_rizalmuja_properties_typeProperties_database": {
+						"value": "[parameters('sql_rizalmuja_properties_typeProperties_database')]"
+					},
+					"sql_rizalmuja_properties_typeProperties_userName": {
+						"value": "[parameters('sql_rizalmuja_properties_typeProperties_userName')]"
+					},
+					"SQL_rapidtech_properties_typeProperties_server": {
+						"value": "[parameters('SQL_rapidtech_properties_typeProperties_server')]"
+					},
+					"SQL_rapidtech_properties_typeProperties_database": {
+						"value": "[parameters('SQL_rapidtech_properties_typeProperties_database')]"
+					},
+					"SQL_rapidtech_properties_typeProperties_userName": {
+						"value": "[parameters('SQL_rapidtech_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

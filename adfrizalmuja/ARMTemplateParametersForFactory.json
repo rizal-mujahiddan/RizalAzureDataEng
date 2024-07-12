@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfrizalmuja"
+		},
+		"ADLS_rizalmuja_accountKey": {
+			"value": ""
+		},
+		"SQL_rapidtech_password": {
+			"value": ""
+		},
+		"sql_rizalmuja_password": {
+			"value": ""
+		},
+		"ADLS_rizalmuja_properties_typeProperties_url": {
+			"value": "https://storageaccrizal.dfs.core.windows.net/"
+		},
+		"SQL_rapidtech_properties_typeProperties_server": {
+			"value": "rapidtech"
+		},
+		"SQL_rapidtech_properties_typeProperties_database": {
+			"value": "AdventureWorks2022"
+		},
+		"SQL_rapidtech_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"sql_rizalmuja_properties_typeProperties_server": {
+			"value": "rizalmuja.database.windows.net"
+		},
+		"sql_rizalmuja_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"sql_rizalmuja_properties_typeProperties_userName": {
+			"value": "admin_rizal"
+		}
+	}
+}
