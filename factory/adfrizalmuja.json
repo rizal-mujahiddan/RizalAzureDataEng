@@ -1,0 +1,9 @@
+{
+	"name": "adfrizalmuja",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3c16d3ac-6b92-4eb6-a1b1-24428baf8081",
+		"tenantId": "e522de87-3b5f-4914-b700-3ee0ac8e7497"
+	}
+}

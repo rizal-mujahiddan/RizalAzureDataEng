@@ -1,0 +1,77 @@
+{
+	"name": "Exampletest",
+	"properties": {
+		"activities": [
+			{
+				"name": "csv_to_sql",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "hrd",
+							"folder_name": "hrd",
+							"file_name": "general_data.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"table_name": "general_data"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Example"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-07-12T04:08:24Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
