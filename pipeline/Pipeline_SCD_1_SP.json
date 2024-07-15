@@ -1,5 +1,5 @@
 {
-	"name": "Pipeline_SCD_1",
+	"name": "Pipeline_SCD_1_SP",
 	"properties": {
 		"activities": [
 			{
@@ -238,8 +238,8 @@
 				]
 			},
 			{
-				"name": "SCD Type 1",
-				"type": "Copy",
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
 						"activity": "Insert CSV to SQL",
@@ -257,68 +257,12 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "SqlServerSource",
-						"additionalColumns": [
-							{
-								"name": "InsertedDate",
-								"value": {
-									"value": "@utcNow()",
-									"type": "Expression"
-								}
-							},
-							{
-								"name": "ModifiedDate",
-								"value": {
-									"value": "@utcNow()",
-									"type": "Expression"
-								}
-							}
-						],
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "SqlServerSink",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true,
-							"keys": [
-								"CustomerID"
-							]
-						},
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"storedProcedureName": "[dbo].[SCD_Type_1_Customer]"
 				},
-				"inputs": [
-					{
-						"referenceName": "SQL_rizalmuja",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema": "dbo",
-							"table_name": "CustomerSource"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "SQL_rizalmuja",
-						"type": "DatasetReference",
-						"parameters": {
-							"schema": "dbo",
-							"table_name": "DimCustomer"
-						}
-					}
-				]
+				"linkedServiceName": {
+					"referenceName": "sql_rizalmuja",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
