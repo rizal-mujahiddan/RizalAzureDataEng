@@ -18,7 +18,7 @@
 			}
 		},
 		"folder": {
-			"name": "HTTP"
+			"name": "ADLS"
 		},
 		"annotations": [],
 		"type": "Binary",
