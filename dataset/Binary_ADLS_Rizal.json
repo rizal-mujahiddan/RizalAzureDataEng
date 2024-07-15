@@ -10,7 +10,7 @@
 				"type": "string",
 				"defaultValue": "latihanazure"
 			},
-			"folder_path": {
+			"folder_name": {
 				"type": "string"
 			},
 			"file_name": {
@@ -30,7 +30,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().folder_path",
+					"value": "@dataset().folder_name",
 					"type": "Expression"
 				},
 				"fileSystem": {
