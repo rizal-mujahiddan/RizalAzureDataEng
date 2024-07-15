@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adfrizalmuja"
 		},
+		"ADLS_HanifFajri_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_HanifFajri'"
+		},
 		"ADLS_rizalmuja_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_rizalmuja'"
@@ -15,13 +19,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SQL_rapidtech'"
 		},
+		"sql_haniffajri_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sql_haniffajri'"
+		},
 		"sql_rizalmuja_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'sql_rizalmuja'"
 		},
+		"ADLS_HanifFajri_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
 		"ADLS_rizalmuja_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccrizal.dfs.core.windows.net/"
+		},
+		"HTTP_solliancerepublicdata_Customer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
 		},
 		"SQL_rapidtech_properties_typeProperties_server": {
 			"type": "string",
@@ -34,6 +50,18 @@
 		"SQL_rapidtech_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa"
+		},
+		"sql_haniffajri_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "mhaniffajari.database.windows.net"
+		},
+		"sql_haniffajri_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"sql_haniffajri_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
 		},
 		"sql_rizalmuja_properties_typeProperties_server": {
 			"type": "string",
@@ -74,8 +102,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ADLS_HanifFajri_accountKey": {
+						"value": "[parameters('ADLS_HanifFajri_accountKey')]"
+					},
 					"ADLS_rizalmuja_accountKey": {
 						"value": "[parameters('ADLS_rizalmuja_accountKey')]"
+					},
+					"sql_haniffajri_password": {
+						"value": "[parameters('sql_haniffajri_password')]"
 					},
 					"sql_rizalmuja_password": {
 						"value": "[parameters('sql_rizalmuja_password')]"
@@ -83,8 +117,23 @@
 					"SQL_rapidtech_password": {
 						"value": "[parameters('SQL_rapidtech_password')]"
 					},
+					"ADLS_HanifFajri_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_HanifFajri_properties_typeProperties_url')]"
+					},
 					"ADLS_rizalmuja_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_rizalmuja_properties_typeProperties_url')]"
+					},
+					"HTTP_solliancerepublicdata_Customer_properties_typeProperties_url": {
+						"value": "[parameters('HTTP_solliancerepublicdata_Customer_properties_typeProperties_url')]"
+					},
+					"sql_haniffajri_properties_typeProperties_server": {
+						"value": "[parameters('sql_haniffajri_properties_typeProperties_server')]"
+					},
+					"sql_haniffajri_properties_typeProperties_database": {
+						"value": "[parameters('sql_haniffajri_properties_typeProperties_database')]"
+					},
+					"sql_haniffajri_properties_typeProperties_userName": {
+						"value": "[parameters('sql_haniffajri_properties_typeProperties_userName')]"
 					},
 					"sql_rizalmuja_properties_typeProperties_server": {
 						"value": "[parameters('sql_rizalmuja_properties_typeProperties_server')]"
@@ -107,6 +156,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adfrizalmuja_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adfrizalmuja_ArmTemplate_0')]"
+			]
 		}
 	]
 }
