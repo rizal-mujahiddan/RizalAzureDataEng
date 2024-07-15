@@ -1,0 +1,43 @@
+{
+	"name": "Binary_ADLS_Rizal",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_rizalmuja",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"container_name": {
+				"type": "string",
+				"defaultValue": "latihanazure"
+			},
+			"folder_path": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "HTTP"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder_path",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().container_name",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
