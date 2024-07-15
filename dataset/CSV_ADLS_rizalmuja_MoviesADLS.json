@@ -5,6 +5,9 @@
 			"referenceName": "ADLS_rizalmuja",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ADLS"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
