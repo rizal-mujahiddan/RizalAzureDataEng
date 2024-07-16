@@ -1,0 +1,546 @@
+{
+	"name": "Example_EndtoEnd_staging_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "customers",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ADLS_customers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"customer_id"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('end_to_end/data/customer/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "customers.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "orde",
+							"table_name": "customers"
+						}
+					}
+				]
+			},
+			{
+				"name": "orders",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ADLS_Orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"order_id"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('end_to_end/data/order/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "orders.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "orde",
+							"table_name": "orders"
+						}
+					}
+				]
+			},
+			{
+				"name": "order_items",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ADLS_order_items",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"order_id",
+								"order_item_id"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('end_to_end/data/order_item/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "order_items.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "orde",
+							"table_name": "order_items"
+						}
+					}
+				]
+			},
+			{
+				"name": "Fact_Customer_RFM",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "order_items",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "orders",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "customers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT * FROM [orde].[view_customer_rfm]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"customer_id",
+								"month_id"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": ".",
+							"table_name": "."
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "orde",
+							"table_name": "fact_customer_rfm"
+						}
+					}
+				]
+			},
+			{
+				"name": "ADLS_customers",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MYSQL_haniffajri_data",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "customers"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('end_to_end/data/customer/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "customers.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				]
+			},
+			{
+				"name": "ADLS_Orders",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MYSQL_haniffajri_data",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "orders"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('end_to_end/data/order/',formatDateTime(utcNow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "orders.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				]
+			},
+			{
+				"name": "ADLS_order_items",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MYSQL_haniffajri_data",
+						"type": "DatasetReference",
+						"parameters": {
+							"table_name": "order_items"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('end_to_end/data/order_item/',formatDateTime(utcNow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "order_items.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Example"
+		},
+		"annotations": []
+	}
+}

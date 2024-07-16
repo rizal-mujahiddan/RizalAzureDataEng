@@ -8,7 +8,7 @@
 		"parameters": {
 			"container_name": {
 				"type": "string",
-				"defaultValue": "hrd"
+				"defaultValue": "latihanazure"
 			},
 			"folder_name": {
 				"type": "string"
