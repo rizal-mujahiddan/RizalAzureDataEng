@@ -1,0 +1,34 @@
+{
+	"name": "SQL_haniffajari_image",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQL_hanifajari_list_image",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema_name": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Database"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema_name",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
