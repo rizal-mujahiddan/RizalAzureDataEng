@@ -1,0 +1,26 @@
+{
+	"name": "MYSQL_haniffajri_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MYSQL_haniffajri",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Database"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
