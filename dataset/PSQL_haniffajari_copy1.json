@@ -1,0 +1,24 @@
+{
+	"name": "PSQL_haniffajari_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PSQL_haniffajri",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema_name": {
+				"type": "string",
+				"defaultValue": "public"
+			},
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Database"
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": []
+	}
+}
