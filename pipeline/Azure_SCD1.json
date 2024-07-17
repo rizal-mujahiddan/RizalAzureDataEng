@@ -164,7 +164,14 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[hrd].[SCD_Type_2_Employee]"
+				},
+				"linkedServiceName": {
+					"referenceName": "sql_rizalmuja",
+					"type": "LinkedServiceReference"
+				}
 			},
 			{
 				"name": "user_to_scd_3",
