@@ -249,8 +249,6 @@
 			{
 				"name": "ADLS to SQL application",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS application",
@@ -321,8 +319,6 @@
 			{
 				"name": "ADLS to SQL prev_app",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS_prev_app",
@@ -393,8 +389,6 @@
 			{
 				"name": "ADLS to SQL bureau",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS_Bureau",
@@ -465,8 +459,6 @@
 			{
 				"name": "ADLS to SQL Install",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS_install",
