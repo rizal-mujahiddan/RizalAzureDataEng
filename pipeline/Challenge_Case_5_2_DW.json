@@ -567,8 +567,53 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT * FROM lon.viewModeling",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"customer_no"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": ".",
+							"table_name": "."
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "lon",
+							"table_name": "loanmodeling"
+						}
+					}
+				]
 			}
 		],
 		"folder": {
