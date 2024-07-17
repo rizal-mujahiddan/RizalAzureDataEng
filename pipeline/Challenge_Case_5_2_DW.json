@@ -310,7 +310,11 @@
 				"outputs": [
 					{
 						"referenceName": "SQL_rizalmuja",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "lon",
+							"table_name": "Applications"
+						}
 					}
 				]
 			},
@@ -347,7 +351,20 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -359,6 +376,16 @@
 							"file_name": "previous_application.csv",
 							"delimiter_name": ",",
 							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "lon",
+							"table_name": "Previous_Applications"
 						}
 					}
 				]
@@ -396,7 +423,20 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -408,6 +448,16 @@
 							"file_name": "bureaus.csv",
 							"delimiter_name": ",",
 							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "lon",
+							"table_name": "Bureaus"
 						}
 					}
 				]
@@ -445,7 +495,20 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -457,6 +520,16 @@
 							"file_name": "installments.csv",
 							"delimiter_name": ",",
 							"row_as_header": true
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "lon",
+							"table_name": "Installments"
 						}
 					}
 				]
