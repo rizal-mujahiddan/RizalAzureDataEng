@@ -247,7 +247,7 @@
 				]
 			},
 			{
-				"name": "PSQL to ADLS application_copy1",
+				"name": "ADLS to SQL application",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -269,23 +269,32 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "PostgreSqlV2Source"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "PSQL_haniffajari",
+						"referenceName": "CSV_ADLS_rizalmuja",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema_name": "public",
-							"table_name": "applicati"
+							"container_name": "latihanazure",
+							"delimiter_name": ",",
+							"row_as_header": true
 						}
 					}
 				]
 			},
 			{
-				"name": "PSQL to ADLS_prev_app_copy1",
+				"name": "ADLS to SQL prev_app",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -322,7 +331,7 @@
 				]
 			},
 			{
-				"name": "PSQL to ADLS_Bureau_copy1",
+				"name": "ADLS to SQL bureau",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
@@ -359,7 +368,7 @@
 				]
 			},
 			{
-				"name": "PSQL to ADLS_install_copy1",
+				"name": "ADLS to SQL Install",
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
