@@ -58,7 +58,7 @@
 				]
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "SCD_1_Employee",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -145,6 +145,69 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "SCD_2_Employee",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "sql_hanif_to_rizal",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sql_hanif_to_rizal",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "SCD_3_Employee",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[hrd].[SCD_Type_3_Employee]"
+				},
+				"linkedServiceName": {
+					"referenceName": "sql_rizalmuja",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
