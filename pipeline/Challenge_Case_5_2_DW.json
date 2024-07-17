@@ -530,7 +530,7 @@
 				]
 			},
 			{
-				"name": "ToView",
+				"name": "ViewToSQL",
 				"type": "Copy",
 				"dependsOn": [
 					{
