@@ -279,6 +279,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "TRUNCATE TABLE lon.Applications;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
@@ -349,6 +350,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "TRUNCATE TABLE lon.Previous_Applications;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
@@ -419,6 +421,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
+						"preCopyScript": "TRUNCATE TABLE lon.Bureaus;",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
@@ -525,6 +528,47 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "ToView",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ADLS to SQL application",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ADLS to SQL prev_app",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ADLS to SQL bureau",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ADLS to SQL Install",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
 			}
 		],
 		"folder": {
