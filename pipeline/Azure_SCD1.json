@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "sql_hanif_to_rizal",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -62,7 +62,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "user_to_scd1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -76,10 +76,75 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[hrd].[SCD_Type_1_Employee]"
+				},
 				"linkedServiceName": {
 					"referenceName": "sql_rizalmuja",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "user_to_scd1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "sql_hanif_to_rizal",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "IF EXISTS (SELECT * FROM hrd.user_scd_1)\nBEGIN\n    TRUNCATE TABLE hrd.user_scd_1\nEND",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "hrd",
+							"table_name": "user"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "hrd",
+							"table_name": "user_scd_1"
+						}
+					}
+				]
 			}
 		],
 		"folder": {
