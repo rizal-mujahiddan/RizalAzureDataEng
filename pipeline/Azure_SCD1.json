@@ -167,7 +167,7 @@
 				"userProperties": []
 			},
 			{
-				"name": "Copy data1",
+				"name": "user_to_scd_3",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -186,13 +186,59 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"preCopyScript": "IF EXISTS (SELECT * FROM hrd.user_historical)\nBEGIN\n    TRUNCATE TABLE hrd.user_historical\nEND",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "hrd",
+							"table_name": "user"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQL_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "hrd",
+							"table_name": "user_historical"
+						}
+					}
+				]
 			},
 			{
 				"name": "SCD_3_Employee",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "user_to_scd_3",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
