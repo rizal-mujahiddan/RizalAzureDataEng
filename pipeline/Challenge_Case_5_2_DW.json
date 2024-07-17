@@ -18,7 +18,26 @@
 					"source": {
 						"type": "PostgreSqlV2Source"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -26,7 +45,20 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schema_name": "public",
-							"table_name": "applicati"
+							"table_name": "application"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": "Cha_Case_5_No_2",
+							"file_name": "applications.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
 						}
 					}
 				]
@@ -47,14 +79,47 @@
 					"source": {
 						"type": "PostgreSqlV2Source"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "PSQL_haniffajari",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema_name": "public"
+							"schema_name": "public",
+							"table_name": "previous_application"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": "Cha_Case_5_No_2",
+							"file_name": "previous_application.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
 						}
 					}
 				]
@@ -75,14 +140,47 @@
 					"source": {
 						"type": "PostgreSqlV2Source"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "PSQL_haniffajari",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema_name": "public"
+							"schema_name": "public",
+							"table_name": "bureau"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": "Cha_Case_5_No_2",
+							"file_name": "bureaus.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
 						}
 					}
 				]
@@ -103,14 +201,47 @@
 					"source": {
 						"type": "PostgreSqlV2Source"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "PSQL_haniffajari",
 						"type": "DatasetReference",
 						"parameters": {
-							"schema_name": "public"
+							"schema_name": "public",
+							"table_name": "installment"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": "Cha_Case_5_No_2",
+							"file_name": "installments.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
 						}
 					}
 				]
@@ -118,6 +249,8 @@
 			{
 				"name": "PSQL to ADLS application_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS application",
@@ -154,6 +287,8 @@
 			{
 				"name": "PSQL to ADLS_prev_app_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS_prev_app",
@@ -189,6 +324,8 @@
 			{
 				"name": "PSQL to ADLS_Bureau_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS_Bureau",
@@ -224,6 +361,8 @@
 			{
 				"name": "PSQL to ADLS_install_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "PSQL to ADLS_install",
