@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "sql_hanif_to_rizal",
+				"name": "sql_Hanif_to_rizal",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -89,7 +89,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "sql_hanif_to_rizal",
+						"activity": "sql_Hanif_to_rizal",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -151,7 +151,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "sql_hanif_to_rizal",
+						"activity": "sql_Hanif_to_rizal",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -178,7 +178,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "sql_hanif_to_rizal",
+						"activity": "sql_Hanif_to_rizal",
 						"dependencyConditions": [
 							"Succeeded"
 						]
