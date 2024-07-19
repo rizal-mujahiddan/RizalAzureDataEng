@@ -1,0 +1,21 @@
+{
+	"name": "Parquet_ADLS_RizalMuja_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_rizalmuja",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ADLS"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
