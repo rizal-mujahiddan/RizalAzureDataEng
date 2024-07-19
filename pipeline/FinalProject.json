@@ -238,7 +238,11 @@
 						"parameters": {
 							"container_name": "finalprojectcontainer",
 							"folder_name": {
-								"value": "@concat('asdasddas')",
+								"value": "@concat('manager_survey_data/',utcNow('yyyy-MM-dd'))",
+								"type": "Expression"
+							},
+							"file_name": {
+								"value": "manager_survey_data.csv",
 								"type": "Expression"
 							},
 							"delimiter_name": ",",
