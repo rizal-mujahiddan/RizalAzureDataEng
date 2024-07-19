@@ -264,8 +264,58 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rapidtech",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "dbo",
+							"table_name": "in_time"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "finalprojectcontainer",
+							"folder_name": {
+								"value": "@concat('in_time/',utcNow('yyyy-MM-dd'))",
+								"type": "Expression"
+							},
+							"file_name": "in_time.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				]
 			},
 			{
 				"name": "Database_outtime_CSV",
