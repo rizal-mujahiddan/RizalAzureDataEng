@@ -13,7 +13,7 @@
 						]
 					},
 					{
-						"activity": "Database_Application_CSV",
+						"activity": "Database_Employee_survey_data_CSV",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -54,7 +54,7 @@
 				}
 			},
 			{
-				"name": "Database_Application_CSV",
+				"name": "Database_Employee_survey_data_CSV",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -71,12 +71,46 @@
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "SQL_rapidtech",
-						"type": "DatasetReference"
+						"referenceName": "SQL_FinalProject_Dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "dbo",
+							"table_name": "employee_survey_data"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "finalprojectcontainer",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
 					}
 				]
 			},
