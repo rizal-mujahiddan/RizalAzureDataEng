@@ -109,7 +109,7 @@
 						"parameters": {
 							"container_name": "finalprojectcontainer",
 							"folder_name": {
-								"value": "@concat('employee_survey_data/',utcNow('yyyy-MM-dd'))",
+								"value": "@concat('staging/','employee_survey_data/',utcNow('yyyy-MM-dd'))",
 								"type": "Expression"
 							},
 							"file_name": "employee_survey_data.csv",
@@ -175,7 +175,7 @@
 						"parameters": {
 							"container_name": "finalprojectcontainer",
 							"folder_name": {
-								"value": "@concat('general_data/',utcNow('yyyy-MM-dd'))",
+								"value": "@concat('staging/','general_data/',utcNow('yyyy-MM-dd'))",
 								"type": "Expression"
 							},
 							"file_name": "general_data.csv",
@@ -241,7 +241,7 @@
 						"parameters": {
 							"container_name": "finalprojectcontainer",
 							"folder_name": {
-								"value": "@concat('manager_survey_data/',utcNow('yyyy-MM-dd'))",
+								"value": "@concat('staging/','manager_survey_data/',utcNow('yyyy-MM-dd'))",
 								"type": "Expression"
 							},
 							"file_name": {
@@ -310,7 +310,7 @@
 						"parameters": {
 							"container_name": "finalprojectcontainer",
 							"folder_name": {
-								"value": "@concat('in_time/',utcNow('yyyy-MM-dd'))",
+								"value": "@concat('staging/','in_time/',utcNow('yyyy-MM-dd'))",
 								"type": "Expression"
 							},
 							"file_name": "in_time.csv",
@@ -376,7 +376,7 @@
 						"parameters": {
 							"container_name": "finalprojectcontainer",
 							"folder_name": {
-								"value": "@concat('out_time/',utcNow('yyyy-MM-dd'))",
+								"value": "@concat('staging/','out_time/',utcNow('yyyy-MM-dd'))",
 								"type": "Expression"
 							},
 							"file_name": "out_time.csv",
