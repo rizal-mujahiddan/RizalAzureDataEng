@@ -7,7 +7,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Database_Installments_CSV",
+						"activity": "Database_manager_survey_data_CSV",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -19,7 +19,7 @@
 						]
 					},
 					{
-						"activity": "Database_Previous_Application_CSV",
+						"activity": "Database_general_data_CSV",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -120,7 +120,7 @@
 				]
 			},
 			{
-				"name": "Database_Previous_Application_CSV",
+				"name": "Database_general_data_CSV",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -137,7 +137,26 @@
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -148,10 +167,23 @@
 							"table_name": "general_data"
 						}
 					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "finalprojectcontainer",
+							"folder_name": "@concat('employee_survey_data/',utcNow('yyyy-MM-dd'))",
+							"file_name": "general_data.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
 				]
 			},
 			{
-				"name": "Database_Installments_CSV",
+				"name": "Database_manager_survey_data_CSV",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -163,8 +195,57 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rapidtech",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "dbo",
+							"table_name": "manager_survey_data"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "finalprojectcontainer",
+							"folder_name": {
+								"value": "@concat('asdasddas')",
+								"type": "Expression"
+							},
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				]
 			},
 			{
 				"name": "Database_Intime_CSV",
