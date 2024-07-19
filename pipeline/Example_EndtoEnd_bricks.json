@@ -64,7 +64,7 @@
 						"parameters": {
 							"container_name": "latihanazure",
 							"folder_name": {
-								"value": "@concat('AzureDataBricks/endtoend_databricks/raw/Customers/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+								"value": "@concat('AzureDataBricks/endtoend_databricks/raw/customers/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 								"type": "Expression"
 							},
 							"file_name": "customers.csv",
@@ -136,7 +136,7 @@
 						"parameters": {
 							"container_name": "latihanazure",
 							"folder_name": {
-								"value": "@concat('AzureDataBricks/endtoend_databricks/raw/Orders/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+								"value": "@concat('AzureDataBricks/endtoend_databricks/raw/orders/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 								"type": "Expression"
 							},
 							"file_name": "orders.csv",
@@ -208,7 +208,7 @@
 						"parameters": {
 							"container_name": "latihanazure",
 							"folder_name": {
-								"value": "@concat('AzureDataBricks/endtoend_databricks/raw/Order_Items/', formatDateTime(utcnow(), 'yyyyMMdd'))",
+								"value": "@concat('AzureDataBricks/endtoend_databricks/raw/order_items/', formatDateTime(utcnow(), 'yyyyMMdd'))",
 								"type": "Expression"
 							},
 							"file_name": "order_items.csv",
@@ -219,7 +219,7 @@
 				]
 			},
 			{
-				"name": "Notebook1",
+				"name": "Transform and Load",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -250,7 +250,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/kelompok1@xundarimalamsuro.onmicrosoft.com/Rizal/Practice Case _ Integrating with ADF/customers"
+					"notebookPath": "/Users/kelompok1@xundarimalamsuro.onmicrosoft.com/Rizal/Practice Case _ Integrating with ADF/customer_rfm"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureKelompok",
