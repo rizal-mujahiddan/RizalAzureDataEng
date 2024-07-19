@@ -108,6 +108,11 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container_name": "finalprojectcontainer",
+							"folder_name": {
+								"value": "@concat('employee_survey_data/',utcNow('yyyy-MM-dd'))",
+								"type": "Expression"
+							},
+							"file_name": "employee_survey_data.csv",
 							"delimiter_name": ",",
 							"row_as_header": true
 						}
@@ -127,8 +132,23 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_rapidtech",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "dbo",
+							"table_name": "general_data"
+						}
+					}
+				]
 			},
 			{
 				"name": "Database_Installments_CSV",
