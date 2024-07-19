@@ -160,7 +160,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQL_rapidtech",
+						"referenceName": "SQL_FinalProject_Dataset",
 						"type": "DatasetReference",
 						"parameters": {
 							"schema_name": "dbo",
@@ -174,7 +174,10 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container_name": "finalprojectcontainer",
-							"folder_name": "@concat('employee_survey_data/',utcNow('yyyy-MM-dd'))",
+							"folder_name": {
+								"value": "@concat('general_data/',utcNow('yyyy-MM-dd'))",
+								"type": "Expression"
+							},
 							"file_name": "general_data.csv",
 							"delimiter_name": ",",
 							"row_as_header": true
@@ -223,7 +226,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQL_rapidtech",
+						"referenceName": "SQL_FinalProject_Dataset",
 						"type": "DatasetReference",
 						"parameters": {
 							"schema_name": "dbo",
@@ -292,7 +295,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQL_rapidtech",
+						"referenceName": "SQL_FinalProject_Dataset",
 						"type": "DatasetReference",
 						"parameters": {
 							"schema_name": "dbo",
@@ -330,8 +333,58 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_FinalProject_Dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "dbo",
+							"table_name": "out_time"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "finalprojectcontainer",
+							"folder_name": {
+								"value": "@concat('out_time/',utcNow('yyyy-MM-dd'))",
+								"type": "Expression"
+							},
+							"file_name": "out_time.csv",
+							"delimiter_name": ",",
+							"row_as_header": true
+						}
+					}
+				]
 			}
 		],
 		"folder": {
