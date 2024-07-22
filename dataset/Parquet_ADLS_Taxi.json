@@ -1,0 +1,33 @@
+{
+	"name": "Parquet_ADLS_Taxi",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Http_yellow_taxi",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"router": {
+				"type": "string"
+			},
+			"file_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "HTTP"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "@concat(dataset().router,'/',dataset().file_name)",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
