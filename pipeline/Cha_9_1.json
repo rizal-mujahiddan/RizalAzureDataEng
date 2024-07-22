@@ -1,5 +1,5 @@
 {
-	"name": "Cha_9",
+	"name": "Cha_9_1",
 	"properties": {
 		"activities": [
 			{
@@ -42,7 +42,15 @@
 				"outputs": [
 					{
 						"referenceName": "JSON_ADLS_rizalmuja",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": {
+								"value": "@concat('Cha_Case_9/staging/',utcnow('yyyy-MM-dd'))",
+								"type": "Expression"
+							},
+							"file_name": "document.json"
+						}
 					}
 				]
 			}
