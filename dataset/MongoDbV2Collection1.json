@@ -1,0 +1,26 @@
+{
+	"name": "MongoDbV2Collection1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Mongodb_Hanif",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"collection_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Unstruct"
+		},
+		"annotations": [],
+		"type": "MongoDbV2Collection",
+		"schema": [],
+		"typeProperties": {
+			"collection": {
+				"value": "@dataset().collection_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
