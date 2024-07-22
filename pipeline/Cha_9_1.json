@@ -35,7 +35,7 @@
 						"referenceName": "Mongodb_hanif_dataset",
 						"type": "DatasetReference",
 						"parameters": {
-							"collection_name": "document"
+							"collection_name": "documents"
 						}
 					}
 				],
@@ -45,10 +45,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container_name": "latihanazure",
-							"folder_name": {
-								"value": "@concat('Cha_Case_9/Task_1/staging/',utcnow('yyyy-MM-dd'))",
-								"type": "Expression"
-							},
+							"folder_name": "@concat('Cha_Case_9/Task_1/staging/',utcnow('yyyy-MM-dd'))",
 							"file_name": "document.json"
 						}
 					}
@@ -57,8 +54,6 @@
 			{
 				"name": "DataBricks_Cha9_1",
 				"type": "DatabricksNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data1",
@@ -75,8 +70,38 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/kelompok1@xundarimalamsuro.onmicrosoft.com/Rizal/Challenge_Case_9/Cha_9_Task_1"
+				},
 				"linkedServiceName": {
 					"referenceName": "AzureKelompok",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "DataBricks_Cha9_1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[rizalcha9].[sp_qna]"
+				},
+				"linkedServiceName": {
+					"referenceName": "SQL_Synapse_Celerates",
 					"type": "LinkedServiceReference"
 				}
 			}
