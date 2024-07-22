@@ -101,8 +101,65 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"enableStaging": false
-							}
+								"source": {
+									"type": "ParquetSource",
+									"storeSettings": {
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
+									},
+									"formatSettings": {
+										"type": "ParquetReadSettings"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Parquet_ADLS_Taxi",
+									"type": "DatasetReference",
+									"parameters": {
+										"router": "trip-data",
+										"file_name": {
+											"value": "@concat('yellow_tripdata_',item(),'.parquet')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Parquet_ADLS_RizalMuja_Dataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"container_name": "latihanazure",
+										"folder_name": {
+											"value": "@concat('Cha_Case_9/Task_2/',item())",
+											"type": "Expression"
+										},
+										"file_name": {
+											"value": "@concat('yellow_taxi_',item(),'.parquet')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						}
 					]
 				}
