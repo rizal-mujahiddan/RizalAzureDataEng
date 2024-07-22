@@ -89,7 +89,7 @@
 					},
 					"activities": [
 						{
-							"name": "copy",
+							"name": "copyparquet",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
