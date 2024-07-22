@@ -1,0 +1,121 @@
+{
+	"name": "Cha_9_2",
+	"properties": {
+		"activities": [
+			{
+				"name": "LookupCalendar",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "CSV_ADLS_rizalmuja",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "latihanazure",
+							"folder_name": "Cha_Case_9/Task_2",
+							"file_name": "cal_numpy.csv",
+							"delimiter_name": ".",
+							"row_as_header": false
+						}
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "LookupCalendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "apasaja",
+							"value": {
+								"type": "Expression",
+								"content": "@split(activity('LookupCalendar').output.firstRow.Prop_0,',')"
+							}
+						}
+					],
+					"setSystemVariable": true
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "LookupCalendar",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split(activity('LookupCalendar').output.firstRow.Prop_0,',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "copy",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"enableStaging": false
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"hasil": {
+				"type": "Array"
+			}
+		},
+		"folder": {
+			"name": "Challenge"
+		},
+		"annotations": []
+	}
+}
