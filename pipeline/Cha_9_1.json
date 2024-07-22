@@ -46,7 +46,7 @@
 						"parameters": {
 							"container_name": "latihanazure",
 							"folder_name": {
-								"value": "@concat('Cha_Case_9/staging/',utcnow('yyyy-MM-dd'))",
+								"value": "@concat('Cha_Case_9/Task_1/staging/',utcnow('yyyy-MM-dd'))",
 								"type": "Expression"
 							},
 							"file_name": "document.json"
