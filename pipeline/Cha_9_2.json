@@ -41,36 +41,6 @@
 				}
 			},
 			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "LookupCalendar",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "pipelineReturnValue",
-					"value": [
-						{
-							"key": "apasaja",
-							"value": {
-								"type": "Expression",
-								"content": "@split(activity('LookupCalendar').output.firstRow.Prop_0,',')"
-							}
-						}
-					],
-					"setSystemVariable": true
-				}
-			},
-			{
 				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
@@ -150,7 +120,7 @@
 									"parameters": {
 										"container_name": "latihanazure",
 										"folder_name": {
-											"value": "@concat('Cha_Case_9/Task_2/',item())",
+											"value": "@concat('Cha_Case_9/Task_2/staging/',item())",
 											"type": "Expression"
 										},
 										"file_name": {
