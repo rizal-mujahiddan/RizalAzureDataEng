@@ -135,7 +135,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "Procedure",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -164,8 +164,6 @@
 			{
 				"name": "Concating",
 				"type": "DatabricksNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach1",
@@ -182,8 +180,38 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/kelompok1@xundarimalamsuro.onmicrosoft.com/Rizal/Challenge_Case_9/Cha_9_Task_2"
+				},
 				"linkedServiceName": {
 					"referenceName": "AzureKelompok",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "procedure DataBricks",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Concating",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[rizaltaxi].[sp_yellow_taxi_databricks]"
+				},
+				"linkedServiceName": {
+					"referenceName": "SQL_Synapse_Celerates",
 					"type": "LinkedServiceReference"
 				}
 			}
