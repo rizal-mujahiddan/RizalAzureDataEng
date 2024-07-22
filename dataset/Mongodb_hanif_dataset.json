@@ -1,5 +1,5 @@
 {
-	"name": "MongoDbV2Collection1",
+	"name": "Mongodb_hanif_dataset",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Mongodb_Hanif",

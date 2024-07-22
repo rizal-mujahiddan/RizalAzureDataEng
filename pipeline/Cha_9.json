@@ -15,8 +15,36 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "MongoDbV2Source",
+						"batchSize": 100
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "Mongodb_hanif_dataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"collection_name": "document"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "JSON_ADLS_rizalmuja",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
