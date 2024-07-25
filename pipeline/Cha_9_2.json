@@ -181,10 +181,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/kelompok1@xundarimalamsuro.onmicrosoft.com/Rizal/Challenge_Case_9/Cha_9_Task_2"
+					"notebookPath": "/Users/kelompok_5@dunialcwefdit.onmicrosoft.com/Rizal/Challenge_Case_9/Cha_9_Task_2"
 				},
 				"linkedServiceName": {
-					"referenceName": "AzureKelompok",
+					"referenceName": "AzureDatabrickskel5",
 					"type": "LinkedServiceReference"
 				}
 			},
